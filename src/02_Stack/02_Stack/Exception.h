@@ -8,7 +8,7 @@ using namespace std;
 class Error1 : exception
 {
 private:
-    const string what_str = "Error1: no ')' in the expression"; 
+    const string what_str = "Error1: no ')' in the expression";
 
 public:
     const char* what() const { return what_str.c_str(); }

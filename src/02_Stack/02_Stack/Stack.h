@@ -15,11 +15,7 @@ public:
     Stack(int _size);
     Stack(const Stack&);
     ~Stack();
-<<<<<<< HEAD
     void Push(ValType);
-=======
-    void Push(ValType); 
->>>>>>> origin/02_Stack
     void Pop();
     ValType Top() const;
     bool IsEmpty() const;
@@ -64,17 +60,10 @@ void Stack<ValType>::Push(ValType el)
 }
 
 template <typename ValType>
-<<<<<<< HEAD
 void Stack<ValType>::Pop()
 {
     if (this->IsEmpty())
         throw Error6();
-=======
-void Stack<ValType>:: Pop() 
-{
-    if (this->IsEmpty())
-        throw Error2();    
->>>>>>> origin/02_Stack
     elems[top--];
 }
 
