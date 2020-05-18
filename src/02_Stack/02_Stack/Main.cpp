@@ -16,15 +16,15 @@ int main()
         string postfix = Postfix::PostfixForm(str);
         cout << postfix << endl;
 
-		cout << endl << "-------------------------STEP 3--------------------------" << endl;
-		operand *var;
-		int n = Postfix::CreateVariables(postfix, var);
+        cout << endl << "-------------------------STEP 3--------------------------" << endl;
+        operand *var;
+        int n = Postfix::CreateVariables(postfix, var);
 
         cout << "-------------------------STEP 4--------------------------" << endl;
         double rez = Postfix::Calculation(postfix, var, n);
         cout << "Result = " << rez << endl;
 
-		delete [] var;
+        delete [] var;
     }
 
     catch (const Error1& e)
@@ -51,10 +51,10 @@ int main()
     {
         cout << endl << e.what() << endl;
     }
-	catch (const Error7& e)
-	{
-		cout << endl << e.what() << endl;
-	}
+    catch (const Error7& e)
+    {
+        cout << endl << e.what() << endl;
+    }
 
     system("pause");
 }

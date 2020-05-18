@@ -63,8 +63,8 @@ public:
 class Error7 : exception
 {
 private:
-	const string what_str = "Error7: division by zero";
+    const string what_str = "Error7: division by zero";
 
 public:
-	const char* what() const { return what_str.c_str(); }
+    const char* what() const { return what_str.c_str(); }
 };

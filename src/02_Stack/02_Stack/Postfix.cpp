@@ -71,15 +71,15 @@ string Postfix::PostfixForm(const string& str)
                     }
                     St2.Pop();
                 }
-			else
-			{			
-				while ((Priority(str[i]) <= Priority(St2.Top())) && (St2.IsEmpty() == false))
-				{
-					St1.Push(St2.Top());
-					St2.Pop();
-				}
-				St2.Push(str[i]);
-			}
+            else
+            {            
+                while ((Priority(str[i]) <= Priority(St2.Top())) && (St2.IsEmpty() == false))
+                {
+                    St1.Push(St2.Top());
+                    St2.Pop();
+                }
+                St2.Push(str[i]);
+            }
         }
     }
 
@@ -112,21 +112,21 @@ int Postfix::CreateVariables(const string& str, operand*& var)
     for (int i = 0; i < str.length(); i++)
         if (Operand(str[i]))
         {
-			for (int j = 0; j < k; j++)
-				if (var[j].name == str[i])
-					f++;
-			if (f == 0) // запоминаем переменные без повторений
-			{
-				var[k].name = str[i];
-				cout << "Enter the value of variable " << var[k].name << ": ";
-				if (!(cin >> var[k].value))
-					throw Error5();
-				cout << endl;
-				k++;
-			}
-			f = 0;
+            for (int j = 0; j < k; j++)
+                if (var[j].name == str[i])
+                    f++;
+            if (f == 0) // запоминаем переменные без повторений
+            {
+                var[k].name = str[i];
+                cout << "Enter the value of variable " << var[k].name << ": ";
+                if (!(cin >> var[k].value))
+                    throw Error5();
+                cout << endl;
+                k++;
+            }
+            f = 0;
         }
-	return k;
+    return k;
 }
 
 double Postfix::Calculation(const string& str, operand* var, int numvar)
@@ -154,13 +154,13 @@ double Postfix::Calculation(const string& str, operand* var, int numvar)
                 Sum.Push(b - a);
             if (str[i] == '*')
                 Sum.Push(b * a);
-			if (str[i] == '/')
-			{
-				if (a != 0)
-					Sum.Push(b / a);
-				else
-					throw Error7();
-			}
+            if (str[i] == '/')
+            {
+                if (a != 0)
+                    Sum.Push(b / a);
+                else
+                    throw Error7();
+            }
         }
     }
     return Sum.Top();
