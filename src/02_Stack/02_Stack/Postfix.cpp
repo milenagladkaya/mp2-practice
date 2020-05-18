@@ -17,13 +17,7 @@ int Postfix::MainStackCounter(const string& str)
     int n = 0, k = 0;
     for (int i = 0; i < str.length(); i++)
         if ((str[i] != '(') && (str[i] != ')'))
-        {
             n++;
-            if (Operand(str[i]))
-                k++;
-        }
-    if (k == 0)
-        return -1;
     return n;
 }
 
@@ -77,17 +71,15 @@ string Postfix::PostfixForm(const string& str)
                     }
                     St2.Pop();
                 }
-            else if (Priority(str[i]) == 1)
-            {
-                while (Priority(St2.Top()) == 2)
-                {
-                    St1.Push(St2.Top());
-                    St2.Pop();
-                }
-                St2.Push(str[i]);
-            }
-            else
-                St2.Push(str[i]);
+			else
+			{			
+				while ((Priority(str[i]) <= Priority(St2.Top())) && (St2.IsEmpty() == false))
+				{
+					St1.Push(St2.Top());
+					St2.Pop();
+				}
+				St2.Push(str[i]);
+			}
         }
     }
 
@@ -107,7 +99,7 @@ string Postfix::PostfixForm(const string& str)
     return postfix;
 }
 
-void Postfix::CreateVariables(const string& str, operand*& var)
+int Postfix::CreateVariables(const string& str, operand*& var)
 {
     int n = 0;
     for (int i = 0; i < str.length(); i++)
@@ -116,27 +108,30 @@ void Postfix::CreateVariables(const string& str, operand*& var)
 
     var = new operand[n];
 
-    int k = 0;
+    int k = 0, f = 0;
     for (int i = 0; i < str.length(); i++)
         if (Operand(str[i]))
         {
-            var[k].name = str[i];
-            cout << "   Enter the value of variable " << var[k].name << ": ";
-            if (!(cin >> var[k].value))
-                throw Error5();
-            cout << endl;
-            k++;
+			for (int j = 0; j < k; j++)
+				if (var[j].name == str[i])
+					f++;
+			if (f == 0) // запоминаем переменные без повторений
+			{
+				var[k].name = str[i];
+				cout << "Enter the value of variable " << var[k].name << ": ";
+				if (!(cin >> var[k].value))
+					throw Error5();
+				cout << endl;
+				k++;
+			}
+			f = 0;
         }
+	return k;
 }
 
-double Postfix::Calculation(const string& str, operand* var)
+double Postfix::Calculation(const string& str, operand* var, int numvar)
 {
-    int a, b;
-
-    int numvar = 0;
-    for (int i = 0; i < str.length(); i++)
-        if (Operand(str[i]))
-            numvar++;
+    double a, b;
 
     Stack<double> Sum(str.length());
     for (int i = 0; i < str.length(); i++)
@@ -159,8 +154,13 @@ double Postfix::Calculation(const string& str, operand* var)
                 Sum.Push(b - a);
             if (str[i] == '*')
                 Sum.Push(b * a);
-            if (str[i] == '/')
-                Sum.Push(b / a);
+			if (str[i] == '/')
+			{
+				if (a != 0)
+					Sum.Push(b / a);
+				else
+					throw Error7();
+			}
         }
     }
     return Sum.Top();

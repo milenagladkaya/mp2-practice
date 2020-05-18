@@ -7,19 +7,19 @@ template <class ValType>
 class Stack
 {
 private:
-    int size;
-    ValType* elems;
-    int top;
+	int size;
+	ValType* elems;
+	int top;
 
 public:
-    Stack(int _size);
-    Stack(const Stack&);
-    ~Stack();
-    void Push(ValType);
-    void Pop();
-    ValType Top() const;
-    bool IsEmpty() const;
-    bool IsFull() const;
+	Stack(int _size);
+	Stack(const Stack&);
+	~Stack();
+	void Push(ValType);
+	void Pop();
+	ValType Top() const;
+	bool IsEmpty() const;
+	bool IsFull() const;
 };
 
 template<typename ValType>

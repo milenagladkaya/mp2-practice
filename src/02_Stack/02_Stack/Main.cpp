@@ -16,13 +16,15 @@ int main()
         string postfix = Postfix::PostfixForm(str);
         cout << postfix << endl;
 
-        cout << endl << "-------------------------STEP 3--------------------------" << endl;
-        operand *var;
-        Postfix::CreateVariables(postfix, var);
+		cout << endl << "-------------------------STEP 3--------------------------" << endl;
+		operand *var;
+		int n = Postfix::CreateVariables(postfix, var);
 
-        cout << endl << "-------------------------STEP 4--------------------------" << endl;
-        double rez = Postfix::Calculation(postfix, var);
+        cout << "-------------------------STEP 4--------------------------" << endl;
+        double rez = Postfix::Calculation(postfix, var, n);
         cout << "Result = " << rez << endl;
+
+		delete [] var;
     }
 
     catch (const Error1& e)
@@ -49,12 +51,15 @@ int main()
     {
         cout << endl << e.what() << endl;
     }
+	catch (const Error7& e)
+	{
+		cout << endl << e.what() << endl;
+	}
 
     system("pause");
 }
 
-//(7+6)*(4-1)-8/2 = 35
-//(a+b)*(c-d)-e/f
-//a+b*c-(a*b+c/b)
-//a+(b*(c-a)+b/(a+b-c))
-//a+b*c
+//A+B
+//A-B*(A-B)
+//A-(B-A)/(C-A)*D
+//A B A - C A - / D * -
